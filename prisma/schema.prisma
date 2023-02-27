@@ -26,6 +26,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @default(now())
   Setting         Setting[]
+  Action          Action[]
 }
 
 model Setting {
@@ -43,6 +44,19 @@ model Setting {
   userId                  String?  @db.Uuid
   createdAt               DateTime @default(now())
   updatedAt               DateTime @default(now())
+  Action                  Action[]
 
   @@index([name], type: BTree)
+}
+
+model Action {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  query     Json     @default("{ \"query\": [] }")
+  enabled   Boolean  @default(true)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?  @db.Uuid
+  setting   Setting? @relation(fields: [settingId], references: [id], onDelete: SetNull)
+  settingId String?  @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
