@@ -16,3 +16,13 @@ model PublicFile {
   key  String
   size Int
 }
+
+model User {
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username String @unique
+  paymentMethodId String?
+  token String?
+  userInfo Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
