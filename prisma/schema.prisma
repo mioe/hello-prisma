@@ -51,6 +51,7 @@ model Setting {
 
 model Action {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      String   @default("legacy") @db.VarChar(30)
   query     Json     @default("{ \"query\": [] }")
   enabled   Boolean  @default(true)
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
