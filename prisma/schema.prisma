@@ -12,17 +12,37 @@ datasource db {
 
 model PublicFile {
   id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  url  String 
+  url  String
   key  String
   size Int
 }
 
 model User {
-  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  username String @unique
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username        String    @unique
   paymentMethodId String?
-  token String?
-  userInfo Json?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  token           String?
+  userInfo        Json?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  Setting         Setting[]
+}
+
+model Setting {
+  id                      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  telegramEnabled         Boolean  @default(false)
+  telegramUsername        String?
+  whatsappEnabled         Boolean  @default(false)
+  whatsappNumber          String?  @default("")
+  whatsappGreetingMessage String?  @default("")
+  appendWazzupId          Boolean  @default(true)
+  name                    String   @default("")
+  appearance              Json     @default("{ \"hello\": \"world\" }")
+  hidden                  Boolean  @default(false)
+  user                    User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId                  String?  @db.Uuid
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @default(now())
+
+  @@index([name], type: BTree)
 }
