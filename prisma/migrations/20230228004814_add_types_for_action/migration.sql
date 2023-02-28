@@ -59,13 +59,13 @@ CREATE UNIQUE INDEX "ActionTypeModal_actionId_key" ON "ActionTypeModal"("actionI
 ALTER TABLE "ActionTypeMessage" ADD CONSTRAINT "ActionTypeMessage_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "Action"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ActionTypeMessage" ADD CONSTRAINT "ActionTypeMessage_avatarId_fkey" FOREIGN KEY ("avatarId") REFERENCES "PublicFile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ActionTypeMessage" ADD CONSTRAINT "ActionTypeMessage_avatarId_fkey" FOREIGN KEY ("avatarId") REFERENCES "PublicFile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ActionTypeChat" ADD CONSTRAINT "ActionTypeChat_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "Action"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ActionTypeChat" ADD CONSTRAINT "ActionTypeChat_avatarId_fkey" FOREIGN KEY ("avatarId") REFERENCES "PublicFile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ActionTypeChat" ADD CONSTRAINT "ActionTypeChat_avatarId_fkey" FOREIGN KEY ("avatarId") REFERENCES "PublicFile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ActionTypeModal" ADD CONSTRAINT "ActionTypeModal_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "Action"("id") ON DELETE CASCADE ON UPDATE CASCADE;
