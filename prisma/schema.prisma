@@ -77,7 +77,7 @@ model ActionTypeMessage {
   avatar        PublicFile? @relation(fields: [avatarId], references: [id], onDelete: Cascade)
   avatarId      String?     @db.Uuid
   title         String?
-  text          String?
+  text          String
   isDark        Boolean     @default(false)
   bradding      Boolean     @default(true)
 }
