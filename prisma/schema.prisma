@@ -11,10 +11,12 @@ datasource db {
 }
 
 model PublicFile {
-  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  url  String
-  key  String
-  size Int
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  url               String
+  key               String
+  size              Int
+  ActionTypeMessage ActionTypeMessage[]
+  ActionTypeChat    ActionTypeChat[]
 }
 
 model User {
@@ -50,15 +52,64 @@ model Setting {
 }
 
 model Action {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  type      String   @default("legacy") @db.VarChar(30)
-  name      String   @default("Action")
-  query     Json     @default("{ \"query\": [] }")
-  enabled   Boolean  @default(true)
-  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId    String?  @db.Uuid
-  setting   Setting? @relation(fields: [settingId], references: [id], onDelete: SetNull)
-  settingId String?  @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type              String             @default("legacy") @db.VarChar(30)
+  name              String             @default("Action")
+  query             Json               @default("{ \"query\": [] }")
+  enabled           Boolean            @default(true)
+  user              User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId            String?            @db.Uuid
+  setting           Setting?           @relation(fields: [settingId], references: [id], onDelete: SetNull)
+  settingId         String?            @db.Uuid
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now())
+  ActionTypeModal   ActionTypeModal?
+  ActionTypeMessage ActionTypeMessage?
+  ActionTypeChat    ActionTypeChat?
+}
+
+model ActionTypeMessage {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action        Action      @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  actionId      String      @unique @db.Uuid
+  redirect      String      @default("whatsapp-and-telegram")
+  avatarEnabled Boolean     @default(false)
+  avatar        PublicFile? @relation(fields: [avatarId], references: [id], onDelete: SetNull)
+  avatarId      String?     @db.Uuid
+  title         String?
+  text          String?
+  isDark        Boolean     @default(false)
+  bradding      Boolean     @default(true)
+}
+
+model ActionTypeChat {
+  id                 String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action             Action      @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  actionId           String      @unique @db.Uuid
+  redirect           String      @default("whatsapp-and-telegram")
+  avatar             PublicFile? @relation(fields: [avatarId], references: [id], onDelete: SetNull)
+  avatarId           String?     @db.Uuid
+  operatorName       String
+  messageNumber1     String
+  messageNumber2     String?
+  quickAnswerEnabled Boolean     @default(false)
+  quickAnswer        Json?
+}
+
+model ActionTypeModal {
+  id                 String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action             Action  @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  actionId           String  @unique @db.Uuid
+  redirect           String  @default("whatsapp-and-telegram")
+  backgroundPosition String  @default("right")
+  // backgroundImage    PublicFile? @relation(references: [id])
+  // logo PublicFile? @relation(references: [id])
+  text               String?
+  extraTextEnabled   Boolean @default(false)
+  whatsappButtonText String?
+  whatsappQrcodeText String?
+  telegramButtonText String?
+  telegramQrcodeText String?
+  isDark             Boolean @default(false)
+  bradding           Boolean @default(true)
 }
