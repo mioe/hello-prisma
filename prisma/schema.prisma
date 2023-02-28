@@ -94,6 +94,7 @@ model ActionTypeChat {
   messageNumber2     String?
   quickAnswerEnabled Boolean     @default(false)
   quickAnswer        Json?
+  bradding           Boolean     @default(true)
 }
 
 model ActionTypeModal {
@@ -102,8 +103,10 @@ model ActionTypeModal {
   actionId           String  @unique @db.Uuid
   redirect           String  @default("whatsapp-and-telegram")
   backgroundPosition String  @default("right")
-  // backgroundImage    PublicFile? @relation(references: [id])
-  // logo PublicFile? @relation(references: [id])
+  // backgroundImage    PublicFile? @relation(fields: [backgroundImageId], references: [id], onDelete: Cascade)
+  // backgroundImageId           String?  @unique @db.Uuid
+  // logo PublicFile? @relation(fields: [logoId], references: [id], onDelete: Cascade)
+  // logoId           String?  @unique @db.Uuid
   text               String?
   extraTextEnabled   Boolean @default(false)
   whatsappButtonText String?
