@@ -79,7 +79,7 @@ model ActionTypeMessage {
   title         String?
   text          String
   isDark        Boolean     @default(false)
-  bradding      Boolean     @default(true)
+  branding      Boolean     @default(true)
 }
 
 model ActionTypeChat {
@@ -94,7 +94,7 @@ model ActionTypeChat {
   messageNumber2     String?
   quickAnswerEnabled Boolean     @default(false)
   quickAnswer        Json?
-  bradding           Boolean     @default(true)
+  branding           Boolean     @default(true)
 }
 
 model ActionTypeModal {
@@ -114,5 +114,5 @@ model ActionTypeModal {
   telegramButtonText String?
   telegramQrcodeText String?
   isDark             Boolean @default(false)
-  bradding           Boolean @default(true)
+  branding           Boolean @default(true)
 }
